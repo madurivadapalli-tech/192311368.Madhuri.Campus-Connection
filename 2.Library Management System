@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+
+class Library {
+    static final String FILE = "books.txt";
+
+    static void addBook(String name) throws Exception {
+        FileWriter fw = new FileWriter(FILE, true);
+        fw.write(name + ",available\n");
+        fw.close();
+    }
+
+    static void issueBook(String name) throws Exception {
+        updateStatus(name, "issued");
+    }
+
+    static void returnBook(String name) throws Exception {
+        updateStatus(name, "available");
+    }
+
+    static void updateStatus(String name, String status) throws Exception {
+        File file = new File(FILE);
+        List<String> list = new ArrayList<>();
+        Scanner sc = new Scanner(file);
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            if (line.startsWith(name + ",")) {
+                list.add(name + "," + status);
+            } else {
+                list.add(line);
+            }
+        }
+        sc.close();
+
+        FileWriter fw = new FileWriter(FILE);
+        for (String s : list) fw.write(s + "\n");
+        fw.close();
+    }
+
+    public static void main(String[] args) throws Exception {
+        addBook("Java");
+        issueBook("Java");
+        returnBook("Java");
+    }
+}
