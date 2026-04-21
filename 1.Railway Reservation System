@@ -1,0 +1,37 @@
+import java.util.*;
+
+class Railway {
+    static int totalSeats = 5;
+    static List<Integer> booked = new ArrayList<>();
+
+    static void bookTicket(int seat) {
+        if (booked.contains(seat)) {
+            System.out.println("Seat already booked!");
+        } else if (booked.size() >= totalSeats) {
+            System.out.println("No seats available!");
+        } else {
+            booked.add(seat);
+            System.out.println("Seat " + seat + " booked.");
+        }
+    }
+
+    static void cancelTicket(int seat) {
+        if (booked.remove(Integer.valueOf(seat))) {
+            System.out.println("Seat " + seat + " cancelled.");
+        } else {
+            System.out.println("Seat not found!");
+        }
+    }
+
+    static void viewSeats() {
+        System.out.println("Booked seats: " + booked);
+        System.out.println("Available seats: " + (totalSeats - booked.size()));
+    }
+
+    public static void main(String[] args) {
+        bookTicket(1);
+        bookTicket(2);
+        cancelTicket(1);
+        viewSeats();
+    }
+}
